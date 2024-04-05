@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using FI.AtividadeEntrevista.DML;
 using WebAtividadeEntrevista.Validators;
+using FI.AtividadeEntrevista.Services;
 
 namespace WebAtividadeEntrevista.Controllers
 {
@@ -27,8 +28,9 @@ namespace WebAtividadeEntrevista.Controllers
         public JsonResult Incluir(ClienteModel model)
         {
             BoCliente bo = new BoCliente();
-            
-            if (!this.ModelState.IsValid)
+
+            var jaExiste = ValidarExistencia(model);
+            if (!this.ModelState.IsValid || jaExiste)
             {
                 List<string> erros = (from item in ModelState.Values
                                       from error in item.Errors
@@ -57,6 +59,11 @@ namespace WebAtividadeEntrevista.Controllers
            
                 return Json("Cadastro efetuado com sucesso");
             }
+        }
+
+        private bool ValidarExistencia(ClienteModel model)
+        {
+            return ClienteService.VerificarExistenciaCampo(nameof(model.CPF), model.CPF);
         }
 
         [HttpPost]
