@@ -14,67 +14,8 @@ namespace FI.AtividadeEntrevista.BLL
         /// <param name="cliente">Objeto de cliente</param>
         public long Incluir(DML.Cliente cliente)
         {
-            ValidarCampos(cliente);
             DAL.DaoCliente cli = new DAL.DaoCliente();
             return cli.Incluir(cliente);
-        }
-
-        /// <summary>
-        /// Valida Campos Cliente
-        /// </summary>
-        /// <param name="cliente">Objeto de cliente</param>
-        private void ValidarCampos(DML.Cliente cliente)
-        {
-            if (!ValidarCPF(cliente.CPF))
-            {
-                throw new Exception("CPF inválido.");
-            }
-
-            if (VerificarExistencia(nameof(cliente.CPF), cliente.CPF))
-            {
-                throw new Exception("CPF já cadastrado.");
-            }
-        }
-
-        /// <summary>
-        /// Valida Campo CPF
-        /// </summary>
-        /// <param name="CPF">CPF do cliente</param>
-        private bool ValidarCPF(string CPF)
-        {
-            {
-                CPF = CPF.Replace(".", "").Replace("-", "");
-
-                if (CPF.Length != 11)
-                    return false;
-
-                if (new string(CPF[0], 11) == CPF)
-                    return false;
-
-                int soma = 0;
-                for (int i = 0; i < 9; i++)
-                    soma += (CPF[i] - '0') * (10 - i);
-                int resto = soma % 11;
-                if (resto < 2)
-                    resto = 0;
-                else
-                    resto = 11 - resto;
-                if (CPF[9] != resto + '0')
-                    return false;
-
-                soma = 0;
-                for (int i = 0; i < 10; i++)
-                    soma += (CPF[i] - '0') * (11 - i);
-                resto = soma % 11;
-                if (resto < 2)
-                    resto = 0;
-                else
-                    resto = 11 - resto;
-                if (CPF[10] != resto + '0')
-                    return false;
-
-                return true;
-            }
         }
 
         /// <summary>
@@ -125,18 +66,6 @@ namespace FI.AtividadeEntrevista.BLL
         {
             DAL.DaoCliente cli = new DAL.DaoCliente();
             return cli.Pesquisa(iniciarEm,  quantidade, campoOrdenacao, crescente, out qtd);
-        }
-
-        /// <summary>
-        /// VerificaExistencia
-        /// </summary>
-        /// <param name="campo"></param>
-        /// <param name="campoValor"></param>
-        /// <returns></returns>
-        public bool VerificarExistencia(string campo, string campoValor)
-        {
-            DAL.DaoCliente cli = new DAL.DaoCliente();
-            return cli.VerificarExistencia(campo, campoValor);
         }
     }
 }

@@ -6,6 +6,8 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using FluentValidation.Mvc;
+using WebAtividadeEntrevista.Validators;
 
 namespace WebAtividadeEntrevista
 {
@@ -18,6 +20,11 @@ namespace WebAtividadeEntrevista
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            FluentValidationModelValidatorProvider.Configure(provider =>
+            {
+                provider.ValidatorFactory = new FluentValidatorFactory();
+            });
         }
     }
 }
