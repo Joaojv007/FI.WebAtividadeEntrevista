@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Beneficiários";
+}
+
+<script>
+        console.log("TESTE DO JOAO VITOR");
+        var urlIncluir = '@Url.Action("IncluirBeneficiario", "Cliente", new { area = "" })';
+        var urlAlteracao = '@Url.Action("AlterarBeneficiario", "Cliente", new { area = "" })';
+        var urlBeneficiarioList = '@Url.Action("BeneficiarioList", "Cliente", new { area = "" })';
+</script>
+@Scripts.Render("~/bundles/beneficiarios")
+@Scripts.Render("~/bundles/clientes")
+
+<div class="modal fade" id="modalBeneficiarios" tabindex="-1" role="dialog" aria-labelledby="modalBeneficiariosLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalBeneficiariosLabel">Beneficiários</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formCadastroBeneficiario" method="post">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="CPF">CPF:</label>
+                                <input required="required" type="text" class="form-control" id="CPF" name="CPF" placeholder="Ex.: 010.011.111-00" maxlength="14">
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="Nome">Nome:</label>
+                                <input required="required" type="text" class="form-control" id="Nome" name="Nome" placeholder="Ex.: João" maxlength="50">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary" id="btnIncluir">Incluir</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="gridBeneficiarios" class="table"></table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
