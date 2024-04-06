@@ -2,14 +2,15 @@
     ViewBag.Title = "Beneficiários";
 }
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-        console.log("TESTE DO JOAO VITOR");
+        console.log("Entrou no Beneficiario");
         var urlIncluir = '@Url.Action("IncluirBeneficiario", "Cliente", new { area = "" })';
-        var urlAlteracao = '@Url.Action("AlterarBeneficiario", "Cliente", new { area = "" })';
+        var urlAlteracaoBeneficiario = '@Url.Action("AlterarBeneficiario", "Cliente", new { area = "" })';
         var urlBeneficiarioList = '@Url.Action("BeneficiarioList", "Cliente", new { area = "" })';
+        var urlPostBeneficiario = '@Url.Action("IncluirBeneficiario", "Cliente", new { area = "" })';
 </script>
 @Scripts.Render("~/bundles/beneficiarios")
-@Scripts.Render("~/bundles/clientes")
 
 <div class="modal fade" id="modalBeneficiarios" tabindex="-1" role="dialog" aria-labelledby="modalBeneficiariosLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -35,11 +36,15 @@
                                 <input required="required" type="text" class="form-control" id="Nome" name="Nome" placeholder="Ex.: João" maxlength="50">
                             </div>
                         </div>
+
                         <div class="col-md-2">
-                            <button type="button" class="btn btn-primary" id="btnIncluir">Incluir</button>
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-primary" id="btnIncluir">Incluir</button>
+                            </div>
                         </div>
                     </div>
                 </form>
+
                 <div class="row">
                     <div class="col-md-12">
                         <table id="gridBeneficiarios" class="table"></table>

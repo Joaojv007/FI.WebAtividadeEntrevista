@@ -1,5 +1,31 @@
-﻿function CarregarLista(titulo, texto) {
-    console.log("testee");
+﻿////console.log("TESTE DO JOAO VITOR");
+////var urlIncluir = '@Url.Action("IncluirBeneficiario", "Cliente", new { area = "" })';
+////var urlAlteracao = '@Url.Action("AlterarBeneficiario", "Cliente", new { area = "" })';
+////var urlBeneficiarioList = '@Url.Action("BeneficiarioList", "Cliente", new { area = "" })';
+function IncluirBeneficiario(nome, cpf) {
+    console.log('entrou no incluir');
+    $.ajax({
+        url: urlPostBeneficiario,
+        method: "POST",
+        data: {
+            "NOME": nome,
+            "CPF": cpf
+        },
+        error: function (r) {
+            if (r.status == 400)
+                ModalDialog("Ocorreu um erro", r.responseJSON);
+            else if (r.status == 500)
+                ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
+        },
+        success: function (r) {
+            ModalDialog("Sucesso!", r)
+            $("#formCadastroBeneficiario")[0].reset();
+        }
+    });
+}
+
+function CarregarLista(titulo, texto) {
+    console.log("CarregarLista");
     if (document.getElementById("gridBeneficiarios"))
         $('#gridBeneficiarios').jtable({
             title: 'Beneficiários Cadastrados',
@@ -28,11 +54,8 @@
             }
         });
 
-    if (document.getElementById("gridBeneficiarios"))
-        $('#gridBeneficiarios').jtable('load');
-
-    console.log("opa!");
-
+    //if (document.getElementById("gridBeneficiarios"))
+    //    $('#gridBeneficiarios').jtable('load');
 }
 
 function ModalDialog(titulo, texto) {
@@ -58,3 +81,14 @@ function ModalDialog(titulo, texto) {
     $('body').append(texto);
     $('#' + random).modal('show');
 }
+
+$(document).ready(function () {
+    console.log("JQUERY FUNCIONAL");
+
+    $('#formCadastroBeneficiario').submit(function (e) {
+        e.preventDefault();
+        var nome = $(this).find("#Nome").val();
+        var cpf = $(this).find("#CPF").val();
+        IncluirBeneficiario(nome, cpf);
+    });
+});
