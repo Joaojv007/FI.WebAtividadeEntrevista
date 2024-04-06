@@ -30,6 +30,9 @@
 
     if (document.getElementById("gridBeneficiarios"))
         $('#gridBeneficiarios').jtable('load');
+
+    console.log("opa!");
+
 }
 
 function ModalDialog(titulo, texto) {
