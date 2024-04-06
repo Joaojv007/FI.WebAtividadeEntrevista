@@ -4,7 +4,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-        console.log("Entrou no Beneficiario");
         var urlIncluir = '@Url.Action("IncluirBeneficiario", "Cliente", new { area = "" })';
         var urlAlteracaoBeneficiario = '@Url.Action("AlterarBeneficiario", "Cliente", new { area = "" })';
         var urlBeneficiarioList = '@Url.Action("BeneficiarioList", "Cliente", new { area = "" })';
@@ -50,6 +49,7 @@
                         <table id="gridBeneficiarios" class="table"></table>
                     </div>
                 </div>
+                <input type="hidden" id="idCliente" name="idCliente" value="" />
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>

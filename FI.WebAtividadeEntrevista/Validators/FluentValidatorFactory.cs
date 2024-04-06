@@ -15,6 +15,7 @@ namespace WebAtividadeEntrevista.Validators
         static FluentValidatorFactory()
         {
             validators.Add(typeof(IValidator<ClienteModel>), new ClienteValidator());
+            validators.Add(typeof(IValidator<BeneficiarioModel>), new BeneficiarioValidator());
         }
 
         public override IValidator CreateInstance(Type validatorType)

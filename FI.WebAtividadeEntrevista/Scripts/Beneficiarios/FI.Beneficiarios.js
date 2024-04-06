@@ -1,15 +1,11 @@
-﻿////console.log("TESTE DO JOAO VITOR");
-////var urlIncluir = '@Url.Action("IncluirBeneficiario", "Cliente", new { area = "" })';
-////var urlAlteracao = '@Url.Action("AlterarBeneficiario", "Cliente", new { area = "" })';
-////var urlBeneficiarioList = '@Url.Action("BeneficiarioList", "Cliente", new { area = "" })';
-function IncluirBeneficiario(nome, cpf) {
-    console.log('entrou no incluir');
+﻿function IncluirBeneficiario(nome, cpf, idcliente) {
     $.ajax({
         url: urlPostBeneficiario,
         method: "POST",
         data: {
             "NOME": nome,
-            "CPF": cpf
+            "CPF": cpf,
+            "IdCliente": idcliente,
         },
         error: function (r) {
             if (r.status == 400)
@@ -24,8 +20,9 @@ function IncluirBeneficiario(nome, cpf) {
     });
 }
 
-function CarregarLista(titulo, texto) {
-    console.log("CarregarLista");
+function CarregarLista(idCliente) {
+    document.getElementById("idCliente").value = idCliente;
+
     if (document.getElementById("gridBeneficiarios"))
         $('#gridBeneficiarios').jtable({
             title: 'Beneficiários Cadastrados',
@@ -83,12 +80,11 @@ function ModalDialog(titulo, texto) {
 }
 
 $(document).ready(function () {
-    console.log("JQUERY FUNCIONAL");
-
     $('#formCadastroBeneficiario').submit(function (e) {
         e.preventDefault();
         var nome = $(this).find("#Nome").val();
         var cpf = $(this).find("#CPF").val();
-        IncluirBeneficiario(nome, cpf);
+        var idCLiente = document.getElementById("idCliente").value;;
+        IncluirBeneficiario(nome, cpf, idCLiente);
     });
 });

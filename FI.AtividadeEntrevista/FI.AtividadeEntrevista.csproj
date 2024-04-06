@@ -76,6 +76,7 @@
     <Compile Include="DML\Beneficiario.cs" />
     <Compile Include="DML\Cliente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BeneficiarioService.cs" />
     <Compile Include="Services\ClienteService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +115,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DAL\Beneficiados\Procedures\FI_SP_PesqBeneficiario.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DAL\Beneficiados\Procedures\FI_SP_VerificaBeneficiario.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

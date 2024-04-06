@@ -65,6 +65,11 @@ namespace WebAtividadeEntrevista.Controllers
         {
             return ClienteService.VerificarExistenciaCampo(nameof(model.CPF), model.CPF);
         }
+        
+        private bool ValidarExistencia(BeneficiarioModel model)
+        {
+            return BeneficiarioService.VerificarExistenciaCampo(nameof(model.CPF), model.CPF);
+        }
 
         [HttpPost]
         public JsonResult Alterar(ClienteModel model)
@@ -158,15 +163,36 @@ namespace WebAtividadeEntrevista.Controllers
             }
         }
 
-        public ActionResult Beneficiario()
-        {
-            return View("Beneficiario");
-        }
+        #region Beneficiario
 
         [HttpPost]
-        public ActionResult IncluirBeneficiario(string cpf, string nome)
+        public ActionResult IncluirBeneficiario(BeneficiarioModel model)
         {
-            return Json(new { success = true, message = "Beneficiário incluído com sucesso." });
+            BoBeneficiario bo = new BoBeneficiario();
+
+            var jaExiste = ValidarExistencia(model);
+            if (!this.ModelState.IsValid || jaExiste)
+            {
+                List<string> erros = (from item in ModelState.Values
+                                      from error in item.Errors
+                                      select error.ErrorMessage).ToList();
+
+                Response.StatusCode = 400;
+                return Json(string.Join(Environment.NewLine, erros));
+            }
+            else
+            {
+
+                model.Id = bo.Incluir(new Beneficiario()
+                {
+                    CPF = model.CPF,
+                    Nome = model.Nome,
+                    IdCliente = model.IdCliente,
+                });
+
+
+                return Json("Cadastro efetuado com sucesso");
+            }
         }
 
         [HttpPost]
@@ -197,7 +223,6 @@ namespace WebAtividadeEntrevista.Controllers
                 if (array.Length > 1)
                     crescente = array[1];
 
-               // List<Cliente> clientes = new BoCliente().Pesquisa(jtStartIndex, jtPageSize, campo, crescente.Equals("ASC", StringComparison.InvariantCultureIgnoreCase), out qtd);
                 List<Beneficiario> beneficiarios = new BoBeneficiario().Pesquisa(jtStartIndex, jtPageSize, campo, crescente.Equals("ASC", StringComparison.InvariantCultureIgnoreCase), out qtd);
 
                 //Return result to jTable
@@ -208,5 +233,6 @@ namespace WebAtividadeEntrevista.Controllers
                 return Json(new { Result = "ERROR", Message = ex.Message });
             }
         }
+        #endregion
     }
 }
