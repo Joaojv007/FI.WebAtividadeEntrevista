@@ -9,7 +9,7 @@ namespace FI.AtividadeEntrevista.BLL
     public class BoBeneficiario
     {
         /// <summary>
-        /// Inclui um novo Beneficiario
+        ///  Inclui um novo Beneficiario
         /// </summary>
         /// <param name="Beneficiario">Objeto de Beneficiario</param>
         public long Incluir(DML.Beneficiario Beneficiario)
