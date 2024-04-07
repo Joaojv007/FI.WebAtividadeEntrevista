@@ -36,6 +36,8 @@ namespace WebAtividadeEntrevista.Controllers
                                       from error in item.Errors
                                       select error.ErrorMessage).ToList();
 
+                erros.Add(RetornarErros());
+
                 Response.StatusCode = 400;
                 return Json(string.Join(Environment.NewLine, erros));
             }
@@ -59,6 +61,11 @@ namespace WebAtividadeEntrevista.Controllers
            
                 return Json("Cadastro efetuado com sucesso");
             }
+        }
+
+        private string RetornarErros()
+        {
+            return "Já existe registro com esse CPF cadastrado!";
         }
 
         private bool ValidarExistencia(ClienteModel model)
@@ -177,6 +184,8 @@ namespace WebAtividadeEntrevista.Controllers
                                       from error in item.Errors
                                       select error.ErrorMessage).ToList();
 
+                erros.Add(RetornarErros());
+
                 Response.StatusCode = 400;
                 return Json(string.Join(Environment.NewLine, erros));
             }
@@ -229,7 +238,6 @@ namespace WebAtividadeEntrevista.Controllers
 
                 List<Beneficiario> beneficiarios = new BoBeneficiario().Pesquisa(idCliente, jtStartIndex, jtPageSize, campo, crescente.Equals("ASC", StringComparison.InvariantCultureIgnoreCase), out qtd);
 
-                //Return result to jTable
                 return Json(new { Result = "OK", Records = beneficiarios, TotalRecordCount = qtd });
             }
             catch (Exception ex)

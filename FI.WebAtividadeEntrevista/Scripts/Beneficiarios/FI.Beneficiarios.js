@@ -62,13 +62,14 @@ function CarregarLista(idCliente) {
                 Alterar: {
                     title: '',
                     display: function (data) {
-                        return '<button onclick="window.location.href=\'' + urlAlteracao + '/' + data.record.Id + '\'" class="btn btn-primary btn-sm">Alterar</button>';
+                        return '<button onclick="window.location.href=\'' + urlAlteracaoBeneficiario + '/' + data.record.Id + '\'" class="btn btn-primary btn-sm">Alterar</button>';
                     }
                 }
             }
         });
 
-        $('#gridBeneficiarios').jtable('load');
+        if (document.getElementById("gridBeneficiarios"))
+            $('#gridBeneficiarios').jtable('load');
     }
 }
 
