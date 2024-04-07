@@ -2,7 +2,8 @@
 	@iniciarEm int,
 	@quantidade int,
 	@campoOrdenacao varchar(200),
-	@crescente bit	
+	@crescente bit,	
+	@idcliente bigint	
 AS
 BEGIN
 	DECLARE @SCRIPT NVARCHAR(MAX)
@@ -21,11 +22,11 @@ BEGIN
 	'SELECT ID, NOME, CPF, IDCLIENTE FROM
 		(SELECT ROW_NUMBER() OVER (ORDER BY ' + @ORDER + ') AS Row, ID, NOME, CPF, IDCLIENTE FROM BENEFICIARIOS WITH(NOLOCK))
 		AS BeneficiariosWithRowNumbers
-	WHERE Row > @iniciarEm AND Row <= (@iniciarEm+@quantidade) ORDER BY'
+	WHERE Row > @iniciarEm AND Row <= (@iniciarEm+@quantidade) AND BeneficiariosWithRowNumbers.IdCliente = @idcliente ORDER BY'
 	
 	SET @SCRIPT = @SCRIPT + @ORDER
 			
-	EXECUTE SP_EXECUTESQL @SCRIPT, @CAMPOS, @iniciarEm, @quantidade
+	EXECUTE SP_EXECUTESQL @SCRIPT, @CAMPOS, @iniciarEm, @quantidade, @idcliente
 
 	SELECT COUNT(1) FROM Beneficiarios WITH(NOLOCK)
 END

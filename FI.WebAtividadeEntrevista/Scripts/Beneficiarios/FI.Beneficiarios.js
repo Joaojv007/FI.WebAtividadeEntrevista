@@ -23,7 +23,7 @@
 function CarregarLista(idCliente) {
     document.getElementById("idCliente").value = idCliente;
 
-    if (document.getElementById("gridBeneficiarios"))
+    if (document.getElementById("gridBeneficiarios")) {
         $('#gridBeneficiarios').jtable({
             title: 'Beneficiários Cadastrados',
             paging: true,
@@ -31,16 +31,33 @@ function CarregarLista(idCliente) {
             sorting: true,
             defaultSorting: 'Nome ASC',
             actions: {
-                listAction: urlBeneficiarioList,
+                listAction: function (postData, jtParams) {
+                    postData = postData || {};
+                    postData.idCliente = idCliente;
+                    return $.Deferred(function ($dfd) {
+                        $.ajax({
+                            url: urlBeneficiarioList,
+                            type: 'POST',
+                            dataType: 'json',
+                            data: postData,
+                            success: function (data) {
+                                $dfd.resolve(data);
+                            },
+                            error: function (err) {
+                                $dfd.reject(err);
+                            }
+                        });
+                    });
+                }
             },
             fields: {
-                Nome: {
+                CPF: {
                     title: 'CPF',
-                    width: '35%%'
+                    width: '35%'
                 },
-                Email: {
+                Nome: {
                     title: 'Nome',
-                    width: '35%%'
+                    width: '35%'
                 },
                 Alterar: {
                     title: '',
@@ -51,9 +68,10 @@ function CarregarLista(idCliente) {
             }
         });
 
-    //if (document.getElementById("gridBeneficiarios"))
-    //    $('#gridBeneficiarios').jtable('load');
+        $('#gridBeneficiarios').jtable('load');
+    }
 }
+
 
 function ModalDialog(titulo, texto) {
     var random = Math.random().toString().replace('.', '');
